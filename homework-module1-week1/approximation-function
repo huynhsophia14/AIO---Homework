@@ -1,0 +1,55 @@
+import math
+
+# Define a factorial function
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+# Define the approximation functions
+def sin_approximation(x, N):
+    sin_x = 0
+    for n in range(N + 1):
+        term = ((-1)**n * x**(2*n + 1)) / factorial(2*n + 1)
+        sin_x += term
+    return sin_x
+
+def cos_approximation(x, N):
+    cos_x = 0
+    for n in range(N + 1):
+        term = ((-1)**n * x**(2*n)) / factorial(2*n)
+        cos_x += term
+    return cos_x
+
+def sinh_approximation(x, N):
+    sinh_x = 0
+    for n in range(N + 1):
+        term = (x**(2*n + 1)) / factorial(2*n + 1)
+        sinh_x += term
+    return sinh_x
+
+def cosh_approximation(x, N):
+    cosh_x = 0
+    for n in range(N + 1):
+        term = (x**(2*n)) / factorial(2*n)
+        cosh_x += term
+    return cosh_x
+
+def main(x, N):
+    # Calculate and print the approximations
+    sin_x = sin_approximation(x, N)
+    cos_x = cos_approximation(x, N)
+    sinh_x = sinh_approximation(x, N)
+    cosh_x = cosh_approximation(x, N)
+
+    print(f"Approximation of sin({x}) using {N} terms: {sin_x}")
+    print(f"Approximation of cos({x}) using {N} terms: {cos_x}")
+    print(f"Approximation of sinh({x}) using {N} terms: {sinh_x}")
+    print(f"Approximation of cosh({x}) using {N} terms: {cosh_x}")
+
+# Run the main function with given parameters
+if __name__ == "__main__":
+    x = 2
+    N = 5
+    main(x, N)
