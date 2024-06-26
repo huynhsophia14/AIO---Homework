@@ -1,0 +1,49 @@
+import gdown
+
+def download_file_from_google_drive(url, output):
+    gdown.download(url, output, quiet=False)
+
+def count_word(file_path):
+    counter = {}
+    
+    try:
+        # Open the file and read its content
+        with open(file_path, 'r') as file:
+            content = file.read()
+        
+        # Split the content into words
+        words = content.split()
+        
+        # Iterate through each word in the content
+        for word in words:
+            # Convert word to lowercase to ensure case insensitivity
+            word = word.lower()
+            # If the word is already in the dictionary, increment its count
+            if word in counter:
+                counter[word] += 1
+            # Otherwise, add the word to the dictionary with a count of 1
+            else:
+                counter[word] = 1
+                
+    except FileNotFoundError:
+        print(f"Error: The file at {file_path} was not found.")
+        return None
+    except IOError:
+        print(f"Error: An error occurred while reading the file at {file_path}.")
+        return None
+
+    return counter
+
+# URL of the file to be downloaded from Google Drive
+file_url = 'https://drive.google.com/uc?id=1IBScGdW2xlNsc9v5zSAya548kNgiOrko'
+output_file = 'P1_data.txt'
+
+# Download the file
+download_file_from_google_drive(file_url, output_file)
+
+# Count the words in the downloaded file
+result = count_word(output_file)
+
+# Print the result
+if result is not None:
+    print(result)
