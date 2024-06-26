@@ -1,0 +1,37 @@
+import torch
+
+class nn_softmax:
+    def __init__(self, data):
+        self.data = data
+    
+    def cal_softmax(self):
+        softmax = torch.zeros(len(self.data))
+
+        #compute the vector of exponential data and its summation
+        exp_data = torch.exp(self.data)
+        exp_sum = torch.sum(exp_data)
+
+        for i in range(len(self.data)):
+            softmax[i] = exp_data[i]/exp_sum
+        
+        return softmax
+    
+    def cal_softmax_stable(self):
+        softmax_stable = torch.zeros(len(self.data))
+
+        #create a vector of maximun value in raw data
+        c = torch.full((len(self.data),), torch.max(self.data))
+
+        #compute the vector of stable exponential data and its summation
+        exp_stable_data = torch.exp(self.data - c)
+        exp_stable_sum = torch.sum(exp_stable_data)
+
+        for i in range(len(self.data)):
+            softmax_stable[i] = exp_stable_data[i]/exp_stable_sum
+        
+        return softmax_stable
+    
+data1 = torch.Tensor([1 , 2 , 3])
+nn_softmax1 = nn_softmax(data1)
+print(nn_softmax1.cal_softmax())
+print(nn_softmax1.cal_softmax_stable())
