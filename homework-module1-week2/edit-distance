@@ -1,0 +1,34 @@
+def levenshtein_distance(s, t):
+    # Create a matrix to store the distances
+    m, n = len(s), len(t)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    
+    # Compute the distance for first row and first column of the matrix
+        #First column
+    for i in range(m + 1):
+        dp[i][0] = i
+        #First row
+    for j in range(n + 1):
+        dp[0][j] = j
+    
+    # Compute the distance for remaining cells 
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s[i - 1] == t[j - 1]: #Check if the two characters from s and t string are the same
+                dp[i][j] = dp[i - 1][j - 1] + 0  # No cost inccured for the same character
+            else:
+                dp[i][j] = min(dp[i - 1][j] + 1,   # Deletion, horizontal move
+                               dp[i][j - 1] + 1,   # Insertion, vertical move
+                               dp[i - 1][j - 1] + 1)  # Substitution, diagonal move
+    
+    return dp[m][n] #answer is given at cell [m][n] of the matrix
+
+# Take input from the user
+s = input("Enter the editing string: ")
+t = input("Enter the target string: ")
+
+# Calculate the Levenshtein distance
+distance = levenshtein_distance(s, t)
+
+# Print the result
+print(f"The Levenshtein distance between '{s}' and '{t}' is {distance}.")
