@@ -1,0 +1,22 @@
+#the function takes on 2 parameters: given list, slicing window k 
+def sliding_window_max(nums, k):
+    #convert to list of int elements and get its length
+    nums = [int(element) for element in nums]
+    n = len(nums)
+
+    #declare the temporary list to store the slicing k elements and output list
+    list_tmp = []
+    output = []
+
+    #The numbers of moving times over user_list is (n-k+1), loop over it and slice k elements of user list into tmp_list,
+    #then determine its max and append into output
+    for i in range(n-k+1):
+        list_tmp = [int(element) for element in nums[i:i+k]]
+        output.append(max(list_tmp))
+    
+    return output
+
+#example
+example_list = [3, 4, 5, 1, -44, 5, 10, 12, 33, 1]
+example_k = 3
+print(sliding_window_max(example_list, example_k,))
