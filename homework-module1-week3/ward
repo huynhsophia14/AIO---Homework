@@ -1,0 +1,102 @@
+import torch
+
+class Student:
+    def __init__(self, name, yob, grade):
+        self.name = name
+        self.yob = yob
+        self.grade = grade
+    
+    def describe(self):
+        print(f"Student - Name: {self.name} - YoB: {self.yob} - Grade: {self.grade}")
+
+class Doctor:
+    def __init__(self, name, yob, specialist):
+        self.name = name
+        self.yob = yob
+        self.specialist = specialist
+    
+    def describe(self):
+        print(f"Doctor - Name: {self.name} - YoB: {self.yob} - Specialist: {self.specialist}")
+
+class Teacher:
+    def __init__(self, name, yob, subject):
+        self.name = name
+        self.yob = yob
+        self.subject = subject
+    
+    def describe(self):
+        print(f"Teacher - Name: {self.name} - YoB: {self.yob} - Subject: {self.subject}")
+
+class Ward:
+    def __init__(self, name):
+        self.name = name
+        self.list = []
+    
+    def add_person(self, person):
+        self.list.append(person)
+
+    def ward_des(self):
+        for ps in self.list:
+            ps.describe()
+
+    def count_doctor(self):
+        num_doctors = 0
+        for ps in self.list:
+            if hasattr(ps, 'specialist'): #check if an object has a specific attribute using the built-in 'hasattr' function.
+                num_doctors += 1
+            else:
+                pass
+        
+        return num_doctors
+    
+    def sort_age(self):
+        self.list.sort(key=lambda x: x.yob, reverse=True)
+
+    def compute_average(self):
+        tea_average_age = 0
+        tea_list = []
+        for ps in self.list:
+            if hasattr(ps, 'subject'):
+                tea_list.append(ps.yob)
+            else:
+                pass
+
+        tor_list = torch.Tensor(tea_list)
+        tea_average_age = torch.mean(tor_list)
+        return tea_average_age
+
+
+
+################################################################################################################################
+#(a)
+student1 = Student(name = "studentA", yob = 2010 , grade ="7")
+student1.describe()
+
+teacher1 = Teacher(name = "teacherA", yob = 1969 , subject = "Math")
+teacher1.describe()
+
+doctor1 = Doctor(name =" doctorA ", yob =1945, specialist = "Endocrinologists")
+doctor1.describe()
+
+#(b)
+teacher2 = Teacher(name = "teacherB", yob = 1995, subject = "History")
+doctor2 = Doctor (name = "doctorB", yob = 1975, specialist = "Cardiologists")
+
+ward1 = Ward(name = "Ward1")
+ward1.add_person(student1)
+ward1.add_person(teacher1)
+ward1.add_person(teacher2)
+ward1.add_person(doctor1)
+ward1.add_person(doctor2)
+ward1.ward_des()
+
+#(c)
+print(f"\nNumber of doctors : {ward1.count_doctor()}")
+
+#(d)
+print("\nAfter sorting Age of Ward1 people")
+ward1.sort_age()
+ward1.ward_des()
+
+#(e)
+print(f"\nAverage year of birth (teachers): {ward1.compute_average()}")
