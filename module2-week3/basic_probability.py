@@ -140,14 +140,15 @@ def prediction_play_tennis(x, list_x_name, prior_probability, conditional_probab
         y_pred = 0
     else:
         y_pred = 1
-    return y_pred
+    return y_pred, p0
   
 X = ['Sunny', 'Cool', 'High', 'Strong']
 data = create_train_data ()
 prior_probability, conditional_probability, list_x_name = train_naive_bayes(data)
-pred = prediction_play_tennis (X, list_x_name, prior_probability, conditional_probability)
+pred, p0 = prediction_play_tennis (X, list_x_name, prior_probability, conditional_probability)
 
 print(pred)
+print(p0)
 
 if (pred):
     print ("Ad should go!")
